@@ -132,16 +132,10 @@ EMAIL_HOST_PASSWORD = 'your_password'
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Apache License](LICENSE).
 
 ---
 
 ## 🌟 Support This Project
 
 If you find this tool useful, consider giving it a ⭐️ on GitHub and sharing it with others!
-
-```
-
----
-
-
