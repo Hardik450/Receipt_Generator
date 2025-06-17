@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            font-size: 14px;
+        }
+
+        .header, .footer {
+            text-align: center;
+        }
+
+        .header img {
+            max-width: 120px;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .info, .summary {
+            margin-bottom: 20px;
+        }
+
+        .info td {
+            padding: 5px;
+        }
+
+        table.items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table.items th, table.items td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .summary td {
+            padding: 6px;
+        }
+
+        .total-line {
+            text-align: right;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #666;
+            margin-top: 40px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="{{ STATIC_URL }}your-logo.png" alt="Company Logo">
+        <div class="title">Official Receipt</div>
+        <p><strong>Your Company Name</strong><br>1234 Street, City<br>contact@company.com</p>
+    </div>
+
+    <h2>Receipt / Invoice</h2>
+
+    <table class="info">
+        <tr>
+            <td><strong>Invoice No:</strong> {{ invoice_number }}</td>
+            <td><strong>Date:</strong> {{ date }}</td>
+        </tr>
+        <tr>
+            <td><strong>Buyer Name:</strong> {{ buyer_name }}</td>
+            <td><strong>Email:</strong> {{ buyer_email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Address:</strong> {{ buyer_address }}</td>
+            <td><strong>Transaction ID:</strong> {{ transaction_id }}</td>
+        </tr>
+    </table>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product / Service</th>
+                <th>Quantity</th>
+                <th>Unit Price (₹)</th>
+                <th>Tax (%)</th>
+                <th>Tax Amount (₹)</th>
+                <th>Total (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.tax_percent }}</td>
+                <td>{{ item.tax|floatformat:2 }}</td>
+                <td>{{ item.total_with_tax|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="summary" width="100%">
+        <tr>
+            <td class="total-line"><strong>Subtotal:</strong></td>
+            <td width="20%">{{ subtotal|floatformat:2 }} ₹</td>
+        </tr>
+        <tr>
+            <td class="total-line"><strong>Total Tax:</strong></td>
+            <td>{{ total_tax|floatformat:2 }} ₹</td>
+        </tr>
+        <tr>
+            <td class="total-line"><strong>Grand Total:</strong></td>
+            <td><strong>{{ grand_total|floatformat:2 }} ₹</strong></td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        Thank you for doing business with us!<br>
+        © {{ now|date:"Y" }} Your Company Name. All rights reserved.
+    </div>
+
+</body>
+</html>
